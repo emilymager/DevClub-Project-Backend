@@ -1,21 +1,23 @@
-const express = require('express'); 
+require('dotenv').config();
+const express = require('express');
+const mongoose = require('mongoose');
+
 const app = express();
-const PORT = 8080;
 
 app.use(express.json());
 
-let users = [{ id: 1, password: 123 }, { id: 2, password: 456 }]; // a temp 'db'
+
+mongoose.connect(process.env.MONGO_URI)
+.then(() => console.log('Connected to MongoDB'))
+.catch((error) => console.error('Failed to connect to MongoDB:', error));
+
 
 app.get('/', (req, res) => {
-  res.json(users);
+    res.send('Server is running and connected to MongoDB!');
 });
 
-app.post('/', (req, res) => {
-  const newUser = req.body;
-  users.push(newUser);
-  res.send(users);
-});
 
-app.put('/', (req, res) => {
-
+const PORT = process.env.PORT;
+app.listen(PORT, () => {
+    console.log(`Server running`);
 });
