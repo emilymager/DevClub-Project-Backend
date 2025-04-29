@@ -1,5 +1,5 @@
 
-const Supplier = require('./supplier.model');
+import Supplier from './supplier.model';
 
 
 async function createSupplier(req, res) {

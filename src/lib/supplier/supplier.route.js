@@ -1,5 +1,7 @@
-const express = require('express');
-const { createSupplier, getAllSuppliers, getSupplierById,updateSupplier,deleteSupplier } = require('./supplier.controller');
+import express from 'express';
+
+import { createSupplier, getAllSuppliers, getSupplierById, updateSupplier, deleteSupplier } from './supplier.controller';
+
 
 const router = express.Router();
 
