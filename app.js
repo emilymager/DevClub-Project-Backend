@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 
 const supplierRoutes = require('./src/lib/supplier/supplier.route'); 
 const userRoutes = require('./src/lib/user/user.route'); 
+const evePicRoutes = require('./src/lib/eventpicture/eventpicture.route'); 
 
 const app = express();
 
@@ -17,6 +18,8 @@ mongoose.connect(process.env.MONGO_URI)
 app.use('/api', supplierRoutes);  
 
 app.use('/api', userRoutes);  
+
+app.use('/api', evePicRoutes);  
 
 
 app.get('/', (req, res) => {
