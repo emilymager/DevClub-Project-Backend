@@ -1,6 +1,6 @@
-import Review from './review.model';
+import Review from './review.model.js';
 
-async function createReview(req, res) {
+export async function createReview(req, res) {
     try {
         const { rank, user, supplier, description } = req.body;
 
@@ -20,7 +20,7 @@ async function createReview(req, res) {
     }
 }
 
-async function getAllReviews(req, res) {
+export async function getAllReviews(req, res) {
     try {
         const reviews = await Review.find().populate('user').populate('supplier');
         res.status(200).json(reviews);
@@ -30,7 +30,7 @@ async function getAllReviews(req, res) {
     }
 }
 
-async function getReviewById(req, res) {
+export async function getReviewById(req, res) {
     try {
         const { id } = req.params;
         const review = await Review.findById(id).populate('user').populate('supplier');
@@ -46,7 +46,7 @@ async function getReviewById(req, res) {
     }
 }
 
-async function updateReview(req, res) {
+export async function updateReview(req, res) {
     try {
         const { id } = req.params;
         const { rank, description } = req.body;
@@ -69,7 +69,7 @@ async function updateReview(req, res) {
     }
 }
 
-async function deleteReview(req, res) {
+export async function deleteReview(req, res) {
     try {
         const { id } = req.params;
 
@@ -86,10 +86,4 @@ async function deleteReview(req, res) {
     }
 }
 
-module.exports = {
-    createReview,
-    getAllReviews,
-    getReviewById,
-    updateReview,
-    deleteReview,
-};
+
