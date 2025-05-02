@@ -1,12 +1,12 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const supplierSchema = new mongoose.Schema({
-supplierType: {
-type: String,
-enum:['dj', 'catering', 'photographer'],
-required:true
-},
-rank: {
+  supplierType: {
+    type: String,
+    enum: ['dj', 'catering', 'photographer'],
+    required: true
+  },
+  rank: {
     type: Number,
     required: true
   },
@@ -21,7 +21,7 @@ rank: {
 
 const Supplier = mongoose.model('Supplier', supplierSchema);
 
-module.exports = Supplier;
+export default Supplier;
 
 
 
