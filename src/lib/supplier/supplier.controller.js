@@ -1,6 +1,4 @@
-
 import Supplier from './supplier.model.js';
-
 
 export async function createSupplier(req, res) {
     try {
@@ -89,6 +87,3 @@ export async function deleteSupplier(req, res) {
         res.status(500).json({ message: 'Failed to delete supplier' });
     }
 }
-
-
-

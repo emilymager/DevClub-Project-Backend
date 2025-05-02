@@ -1,7 +1,5 @@
 import express from 'express';
-
 import * as controller from './supplier.controller.js';
-
 
 const router = express.Router();
 

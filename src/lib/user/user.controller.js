@@ -1,8 +1,6 @@
-const User = require('./user.model');
+import User from './user.model.js';
 
-console.log("djf");
-async function createUser(req, res) {
-    console.log("Hi");
+export async function createUser(req, res) {
     try {
         const { email, password } = req.body;
 
@@ -21,7 +19,7 @@ async function createUser(req, res) {
     }
 }
 
-async function getAllUsers(req, res) {
+export async function getAllUsers(req, res) {
     try {
         const users = await User.find();
         res.status(200).json(users);
@@ -33,7 +31,7 @@ async function getAllUsers(req, res) {
     }
 }
 
-async function getUserById(req, res) {
+export async function getUserById(req, res) {
     try {
         const { id } = req.params;
         const user = await User.findById(id);
@@ -50,7 +48,7 @@ async function getUserById(req, res) {
     }
 }
 
-async function updateUser(req, res) {
+export async function updateUser(req, res) {
     try {
         const { id } = req.params;
         const { email, password} = req.body;
@@ -78,7 +76,7 @@ async function updateUser(req, res) {
     }
 }
 
-async function deleteUser(req, res) {
+export async function deleteUser(req, res) {
     try {
         const { id } = req.params;
 
@@ -95,11 +93,3 @@ async function deleteUser(req, res) {
         res.status(500).json({ message: 'Failed to delete user' });
     }
 }
-
-module.exports = {
-    createUser,
-    getAllUsers,
-    getUserById,
-    updateUser,
-    deleteUser,
-};
