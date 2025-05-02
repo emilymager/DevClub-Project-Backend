@@ -1,8 +1,9 @@
 import dotenv from 'dotenv';
 import express from 'express';
 import mongoose from 'mongoose';
-import supplierRoutes from './src/lib/supplier/supplier.route';
-import reviewRoutes from './src/lib/review/review.route';
+import supplierRoutes from './src/lib/supplier/supplier.route.js';
+import reviewRoutes from './src/lib/review/review.route.js';
+
 
 dotenv.config();
 

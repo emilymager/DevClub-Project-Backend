@@ -1,8 +1,8 @@
 
-import Supplier from './supplier.model';
+import Supplier from './supplier.model.js';
 
 
-async function createSupplier(req, res) {
+export async function createSupplier(req, res) {
     try {
         const { supplierType, rank, description } = req.body;
 
@@ -21,7 +21,7 @@ async function createSupplier(req, res) {
     }
 }
 
-async function getAllSuppliers(req, res) {
+export async function getAllSuppliers(req, res) {
     try {
         const suppliers = await Supplier.find();
         res.status(200).json(suppliers);
@@ -30,7 +30,7 @@ async function getAllSuppliers(req, res) {
         res.status(500).json({ message: 'Failed to fetch suppliers' });
     }
 }
-async function getSupplierById(req, res) {
+export async function getSupplierById(req, res) {
     try {
         const { id } = req.params;
         const supplier = await Supplier.findById(id);
@@ -46,7 +46,7 @@ async function getSupplierById(req, res) {
     }
 }
 
-async function updateSupplier(req, res) {
+export async function updateSupplier(req, res) {
     try {
         const { id } = req.params;
         const { supplierType, rank, description } = req.body;
@@ -73,7 +73,7 @@ async function updateSupplier(req, res) {
     }
 }
 
-async function deleteSupplier(req, res) {
+export async function deleteSupplier(req, res) {
     try {
         const { id } = req.params;
 
@@ -90,10 +90,5 @@ async function deleteSupplier(req, res) {
     }
 }
 
-module.exports = {
-    createSupplier,
-    getAllSuppliers,
-    getSupplierById,
-    updateSupplier,
-    deleteSupplier,
-};
+
+
