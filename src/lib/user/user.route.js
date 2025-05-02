@@ -1,17 +1,16 @@
-const express = require('express');
-const { createUser, getAllUsers, getUserById, updateUser, deleteUser } = require('./user.controller');
+import express from 'express';
+import * as controller from './user.controller.js';
 
 const router = express.Router();
 
-console.log("ihf");
-router.post('/user', createUser);
+router.post('/user', controller.createUser);
 
-router.get('/user', getAllUsers);
+router.get('/user', controller.getAllUsers);
 
-router.get('/user/:id', getUserById); 
+router.get('/user/:id', controller.getUserById); 
 
-router.put('/user/:id', updateUser);
+router.put('/user/:id', controller.updateUser);
 
-router.delete('/user/:id', deleteUser);
+router.delete('/user/:id', controller.deleteUser);
 
-module.exports = router;
+export default router;

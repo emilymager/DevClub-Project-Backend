@@ -1,5 +1,5 @@
-const mongoose = require('mongoose');
-const User = require('../user/user.model');
+import mongoose from 'mongoose';
+import User from'../user/user.model.js';
 
 
 const eventPicSchema = new mongoose.Schema({
@@ -16,4 +16,4 @@ const eventPicSchema = new mongoose.Schema({
 
 const EventPicture = mongoose.model('EventPicture', eventPicSchema);
 
-module.exports = EventPicture;
+export default EventPicture;

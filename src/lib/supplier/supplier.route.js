@@ -1,16 +1,16 @@
-const express = require('express');
-const { createSupplier, getAllSuppliers, getSupplierById,updateSupplier,deleteSupplier } = require('./supplier.controller');
+import express from 'express';
+import * as controller from './supplier.controller.js';
 
 const router = express.Router();
 
-router.post('/supplier', createSupplier);
+router.post('/supplier', controller.createSupplier);
 
-router.get('/supplier', getAllSuppliers);
+router.get('/supplier', controller.getAllSuppliers);
 
-router.get('/supplier/:id', getSupplierById); 
+router.get('/supplier/:id', controller.getSupplierById); 
 
-router.put('/supplier/:id', updateSupplier);
+router.put('/supplier/:id', controller.updateSupplier);
 
-router.delete('/supplier/:id', deleteSupplier);
+router.delete('/supplier/:id', controller.deleteSupplier);
 
-module.exports = router;
+export default router;

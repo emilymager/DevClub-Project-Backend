@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const supplierSchema = new mongoose.Schema({
 supplierType: {
@@ -21,7 +21,7 @@ rank: {
 
 const Supplier = mongoose.model('Supplier', supplierSchema);
 
-module.exports = Supplier;
+export default Supplier;
 
 
 

@@ -1,6 +1,6 @@
-const EventPicture = require('./eventpicture.model');
+import EventPicture from './eventpicture.model.js';
 
-async function createEventPicture(req, res) {
+export async function createEventPicture(req, res) {
     try {
         const { user, date } = req.body;
 
@@ -19,7 +19,7 @@ async function createEventPicture(req, res) {
     }
 }
 
-async function getAllEventPictures(req, res) {
+export async function getAllEventPictures(req, res) {
     try {
         const evePics = await EventPicture.find();
         res.status(200).json(evePics);
@@ -31,7 +31,7 @@ async function getAllEventPictures(req, res) {
     }
 }
 
-async function getEventPictureById(req, res) {
+export async function getEventPictureById(req, res) {
     try {
         const { id } = req.params;
         const eventPic = await EventPicture.findById(id);
@@ -48,7 +48,7 @@ async function getEventPictureById(req, res) {
     }
 }
 
-async function updateEventPicture(req, res) {
+export async function updateEventPicture(req, res) {
     try {
         const { id } = req.params;
         const { user, date} = req.body;
@@ -76,7 +76,7 @@ async function updateEventPicture(req, res) {
     }
 }
 
-async function deleteEventPicture(req, res) {
+export async function deleteEventPicture(req, res) {
     try {
         const { id } = req.params;
 
@@ -93,11 +93,3 @@ async function deleteEventPicture(req, res) {
         res.status(500).json({ message: 'Failed to delete Event Picture' });
     }
 }
-
-module.exports = {
-    createEventPicture,
-    getAllEventPictures,
-    getEventPictureById,
-    updateEventPicture,
-    deleteEventPicture,
-};

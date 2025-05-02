@@ -1,10 +1,12 @@
-require('dotenv').config();
-const express = require('express');
-const mongoose = require('mongoose');
+import dotenv from 'dotenv';
+import express from 'express';
+import mongoose from 'mongoose';
 
-const supplierRoutes = require('./src/lib/supplier/supplier.route'); 
-const userRoutes = require('./src/lib/user/user.route'); 
-const evePicRoutes = require('./src/lib/eventpicture/eventpicture.route'); 
+import supplierRoutes from './src/lib/supplier/supplier.route.js'; 
+import userRoutes from './src/lib/user/user.route.js'; 
+import evePicRoutes from './src/lib/eventpicture/eventpicture.route.js'; 
+
+dotenv.config();
 
 const app = express();
 
@@ -14,13 +16,9 @@ mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('Connected to MongoDB'))
   .catch((error) => console.error('Failed to connect to MongoDB:', error));
 
-
-app.use('/api', supplierRoutes);  
-
-app.use('/api', userRoutes);  
-
-app.use('/api', evePicRoutes);  
-
+app.use('/api', supplierRoutes);
+app.use('/api', userRoutes);
+app.use('/api', evePicRoutes);
 
 app.get('/', (req, res) => {
   res.send('Server is running and connected to MongoDB!');
