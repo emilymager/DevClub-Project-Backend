@@ -5,6 +5,7 @@ import mongoose from 'mongoose';
 import supplierRoutes from './src/lib/supplier/supplier.route.js'; 
 import userRoutes from './src/lib/user/user.route.js'; 
 import evePicRoutes from './src/lib/eventpicture/eventpicture.route.js'; 
+import eventRoutes from './src/lib/event/event.route.js'; 
 import reviewRoutes from './src/lib/review/review.route.js';
 
 dotenv.config();
@@ -21,9 +22,8 @@ mongoose.connect(process.env.MONGO_URI)
 app.use('/api', supplierRoutes);
 app.use('/api', userRoutes);
 app.use('/api', evePicRoutes);
+app.use('/api', eventRoutes);
 app.use('/api', reviewRoutes);
-
-
 
 app.get('/', (req, res) => {
   res.send('Server is running and connected to MongoDB!');
