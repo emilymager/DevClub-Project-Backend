@@ -1,4 +1,6 @@
 import Supplier from './supplier.model.js';
+import Review from '../review/review.model.js'; 
+import Event from '../event/event.model.js';
 
 export async function createSupplier(req, res) {
     try {
@@ -28,6 +30,7 @@ export async function getAllSuppliers(req, res) {
         res.status(500).json({ message: 'Failed to fetch suppliers' });
     }
 }
+
 export async function getSupplierById(req, res) {
     try {
         const { id } = req.params;
@@ -49,18 +52,15 @@ export async function updateSupplier(req, res) {
         const { id } = req.params;
         const { supplierType, rank, description } = req.body;
 
-
         const supplier = await Supplier.findById(id);
 
         if (!supplier) {
             return res.status(404).json({ message: 'Supplier not found' });
         }
 
-
         supplier.supplierType = supplierType || supplier.supplierType;
         supplier.rank = rank || supplier.rank;
         supplier.description = description || supplier.description;
-
 
         await supplier.save();
 
@@ -85,5 +85,62 @@ export async function deleteSupplier(req, res) {
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Failed to delete supplier' });
+    }
+}
+
+export async function addReviewToSupplier(req, res) {
+    try {
+        const supplierId = req.params.id;
+        const { rank, description, userId } = req.body; 
+
+        const supplier = await Supplier.findById(supplierId);
+        if (!supplier) {
+            return res.status(404).json({ message: 'Supplier not found' });
+        }
+
+        const review = new Review({
+            rank,
+            description,
+            user: userId,
+            supplier: supplierId
+        });
+
+        await review.save();
+
+        return res.status(201).json({ message: 'Review added successfully', review });
+    } catch (error) {
+        console.error('Error adding review:', error);
+        return res.status(500).json({ message: 'Failed to add review', error: error.message });
+    }
+}
+
+export async function addEventToHistory(req, res) {
+    try {
+        const { id } = req.params;  
+        const { eventId } = req.body;  
+
+  
+        const supplier = await Supplier.findById(id);
+        if (!supplier) {
+            return res.status(404).json({ message: 'Supplier not found' });
+        }
+
+     
+        const event = await Event.findById(eventId);
+        if (!event) {
+            return res.status(404).json({ message: 'Event not found' });
+        }
+
+      
+        supplier.history.push(eventId);
+
+       
+        await supplier.save();
+
+        
+        res.status(200).json({ message: 'Event added to history successfully', supplier });
+    } catch (error) {
+        console.error('Error adding event to history:', error);
+        res.status(500).json({ message: 'Failed to add event to history', error: error.message });
     }
 }

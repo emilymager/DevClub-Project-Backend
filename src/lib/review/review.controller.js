@@ -22,8 +22,25 @@ export async function createReview(req, res) {
 
 export async function getAllReviews(req, res) {
     try {
-        const reviews = await Review.find().populate('user').populate('supplier');
-        res.status(200).json(reviews);
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 10;
+        const skip = (page - 1) * limit;
+
+        const total = await Review.countDocuments();
+
+        const reviews = await Review.find()
+            .populate('user')
+            .populate('supplier')
+            .sort({ createdAt: -1 }) 
+            .skip(skip)
+            .limit(limit);
+
+        res.status(200).json({
+            total,
+            page,
+            pages: Math.ceil(total / limit),
+            reviews
+        });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Failed to fetch reviews' });
@@ -33,7 +50,10 @@ export async function getAllReviews(req, res) {
 export async function getReviewById(req, res) {
     try {
         const { id } = req.params;
-        const review = await Review.findById(id).populate('user').populate('supplier');
+
+        const review = await Review.findById(id)
+            .populate('user')
+            .populate('supplier');
 
         if (!review) {
             return res.status(404).json({ message: 'Review not found' });

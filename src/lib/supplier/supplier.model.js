@@ -8,7 +8,7 @@ const supplierSchema = new mongoose.Schema({
   },
   rank: {
     type: Number,
-    required: true
+    //required: true
   },
   description: {
     type: String

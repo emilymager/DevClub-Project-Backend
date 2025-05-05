@@ -13,4 +13,8 @@ router.put('/supplier/:id', controller.updateSupplier);
 
 router.delete('/supplier/:id', controller.deleteSupplier);
 
+router.post('/supplier/:id/review', controller.addReviewToSupplier);
+
+router.post('/supplier/:id/event', controller.addEventToHistory);
+
 export default router;
