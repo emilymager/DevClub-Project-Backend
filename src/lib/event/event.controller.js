@@ -121,3 +121,200 @@ export async function deleteEvent(req, res) {
         res.status(500).json({ message: 'Failed to delete event' });
     }
 }
+
+export async function addSupplierToEvent(req, res) {
+    try {
+      const { supplierId, eventId } = req.body;
+  
+      const event = await Event.findById(eventId);
+  
+      if (!event) {
+        return res.status(404).json({ message: 'Event not found' });
+      }
+  
+      if (!event.suppliers.includes(supplierId)) {
+        event.suppliers.push(supplierId);
+        await event.save();
+      }
+  
+      res.status(200).json({ message: 'Supplier added successfully', event });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Failed to add supplier to event' });
+    }
+  }
+  
+  export async function removeSupplierFromEvent(req, res) {
+    try {
+      const { supplierId, eventId } = req.body;
+  
+      const event = await Event.findById(eventId);
+  
+      if (!event) {
+        return res.status(404).json({ message: 'Event not found' });
+      }
+  
+      event.suppliers = event.suppliers.filter(supplier => supplier.toString() !== supplierId);
+  
+      await event.save();
+  
+      res.status(200).json({ message: 'Supplier removed successfully', event });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Failed to remove supplier from event' });
+    }
+  }
+
+  export async function addParticipantToEvent(req, res) {
+    try {
+      const { userId, eventId } = req.body;
+  
+      const event = await Event.findById(eventId);
+  
+      if (!event) {
+        return res.status(404).json({ message: 'Event not found' });
+      }
+  
+      if (!event.participants.includes(userId)) {
+        event.participants.push(userId);
+        await event.save();
+      }
+  
+      res.status(200).json({ message: 'Participant added successfully', event });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Failed to add participant to event' });
+    }
+  }
+  
+  export async function deleteParticipantByHost(req, res) {
+    try {
+      const { userId, eventId } = req.body;
+  
+      const event = await Event.findById(eventId);
+  
+      if (!event) {
+        return res.status(404).json({ message: 'Event not found' });
+      }
+  
+      if (event.host.toString() !== req.user.id) {
+        return res.status(403).json({ message: 'Only the host can remove participants' });
+      }
+  
+      event.participants = event.participants.filter(participant => participant.toString() !== userId);
+  
+      await event.save();
+  
+      res.status(200).json({ message: 'Participant removed successfully', event });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Failed to remove participant from event' });
+    }
+  }
+
+  export async function addEventPicture(req, res) {
+    try {
+      const { pictureId, eventId } = req.body;
+  
+      const event = await Event.findById(eventId);
+  
+      if (!event) {
+        return res.status(404).json({ message: 'Event not found' });
+      }
+  
+      if (!event.eventPictures.includes(pictureId)) {
+        event.eventPictures.push(pictureId);
+        await event.save();
+      }
+  
+      res.status(200).json({ message: 'Event picture added successfully', event });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Failed to add event picture' });
+    }
+  }
+  
+  export async function removeEventPicture(req, res) {
+    try {
+      const { pictureId, eventId } = req.body;
+  
+      const event = await Event.findById(eventId);
+  
+      if (!event) {
+        return res.status(404).json({ message: 'Event not found' });
+      }
+  
+      event.eventPictures = event.eventPictures.filter(picture => picture.toString() !== pictureId);
+  
+      await event.save();
+  
+      res.status(200).json({ message: 'Event picture removed successfully', event });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Failed to remove event picture' });
+    }
+  }
+  
+  export async function addInvitationPicture(req, res) {
+    try {
+      const { image, eventId } = req.body;
+  
+      const event = await Event.findById(eventId);
+  
+      if (!event) {
+        return res.status(404).json({ message: 'Event not found' });
+      }
+  
+      event.invitationPicture = image;
+  
+      await event.save();
+  
+      res.status(200).json({ message: 'Invitation picture added successfully', event });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Failed to add invitation picture' });
+    }
+  }
+
+  export async function removeInvitationPicture(req, res) {
+    try {
+      const { eventId } = req.body;
+  
+      const event = await Event.findById(eventId);
+  
+      if (!event) {
+        return res.status(404).json({ message: 'Event not found' });
+      }
+  
+      event.invitationPicture = null;
+  
+      await event.save();
+  
+      res.status(200).json({ message: 'Invitation picture removed successfully', event });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Failed to remove invitation picture' });
+    }
+  }
+  
+  export async function putInvitationPicture(req, res) {
+    try {
+      const { image, eventId } = req.body;
+  
+      const event = await Event.findById(eventId);
+  
+      if (!event) {
+        return res.status(404).json({ message: 'Event not found' });
+      }
+  
+      event.invitationPicture = image;
+  
+      await event.save();
+  
+      res.status(200).json({ message: 'Invitation picture updated successfully', event });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Failed to update invitation picture' });
+    }
+  }
+  
