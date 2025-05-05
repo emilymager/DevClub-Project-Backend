@@ -28,8 +28,25 @@ export async function createEvent(req, res) {
 
 export async function getAllEvents(req, res) {
     try {
-        const events = await Event.find();
-        res.status(200).json(events);
+        const { page = 1, limit = 10 } = req.query;
+
+        const pageNum = parseInt(page);
+        const limitNum = parseInt(limit);
+
+        const skip = (pageNum - 1) * limitNum;
+
+        const totalEvents = await Event.countDocuments();
+
+        const events = await Event.find().skip(skip) .limit(limitNum).sort({ createdAt: -1 });
+
+        const totalPages = Math.ceil(totalEvents / limitNum);
+
+        res.status(200).json({
+            events,
+            page: pageNum,
+            totalPages,
+            totalEvents
+        });
     } 
     
     catch (error) {
