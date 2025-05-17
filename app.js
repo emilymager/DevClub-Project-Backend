@@ -1,7 +1,7 @@
 import dotenv from 'dotenv';
 import express from 'express';
 import mongoose from 'mongoose';
-
+import cors from 'cors';
 import supplierRoutes from './src/lib/supplier/supplier.route.js'; 
 import userRoutes from './src/lib/user/user.route.js'; 
 import evePicRoutes from './src/lib/eventpicture/eventpicture.route.js'; 
@@ -12,7 +12,9 @@ dotenv.config();
 
 const app = express();
 
+
 app.use(express.json());
+app.use(cors({ origin: 'http://localhost:5173' }));
 
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('Connected to MongoDB'))
