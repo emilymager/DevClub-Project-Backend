@@ -21,11 +21,32 @@ export async function createEventPicture(req, res) {
 
 export async function getAllEventPictures(req, res) {
     try {
-        const evePics = await EventPicture.find();
-        res.status(200).json(evePics);
-    } 
-    
-    catch (error) {
+        
+        const { page = 1, limit = 10 } = req.query;
+
+        const pageNum = parseInt(page);
+        const limitNum = parseInt(limit);
+        const skip = (pageNum - 1) * limitNum;
+
+        
+        const totalPictures = await EventPicture.countDocuments();
+
+        
+        const eventPictures = await EventPicture.find()
+            .populate('user') 
+            .skip(skip)
+            .limit(limitNum)
+            .sort({ createdAt: -1 });
+
+        const totalPages = Math.ceil(totalPictures / limitNum);
+
+        res.status(200).json({
+            eventPictures,
+            page: pageNum,
+            totalPages,
+            totalPictures
+        });
+    } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Failed to fetch event pictures' });
     }
