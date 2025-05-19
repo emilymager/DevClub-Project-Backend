@@ -54,7 +54,9 @@ export async function getSupplierById(req, res) {
             return res.status(404).json({ message: 'Supplier not found' });
         }
 
-        res.status(200).json(supplier);
+        res.status(200).json({
+            supplier
+        });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Failed to fetch supplier' });
@@ -156,5 +158,40 @@ export async function addEventToHistory(req, res) {
     } catch (error) {
         console.error('Error adding event to history:', error);
         res.status(500).json({ message: 'Failed to add event to history', error: error.message });
+    }
+}
+
+
+export async function getHistoryBySupplierId(req, res) {
+    try {
+        const { id } = req.params;
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 10;
+        const skip = (page - 1) * limit;
+
+        const supplier = await Supplier.findById(id)
+            .populate({
+                path: 'history',
+                options: {
+                    skip,
+                    limit
+                }
+            });
+
+        if (!supplier) {
+            return res.status(404).json({ message: 'Supplier not found' });
+        }
+
+        const totalEvents = await Event.countDocuments({ _id: { $in: supplier.history } });
+
+        res.status(200).json({
+            total: totalEvents,
+            page,
+            pages: Math.ceil(totalEvents / limit),
+            history: supplier.history
+        });
+    } catch (error) {
+        console.error('Error fetching history:', error);
+        res.status(500).json({ message: 'Failed to fetch history', error: error.message });
     }
 }
