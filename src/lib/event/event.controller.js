@@ -2,9 +2,10 @@ import Event from './event.model.js';
 
 export async function createEvent(req, res) {
     try {
-        const { host, participants, invitationPicture, date, location, description, eventType, budget, visibility } = req.body;
+        const { title, host, participants, invitationPicture, date, location, description, eventType, budget, visibility } = req.body;
 
         const event = new Event({
+            title,
             host,
             participants,
             invitationPicture,
@@ -19,12 +20,12 @@ export async function createEvent(req, res) {
         await event.save();
         res.status(201).json({ message: 'Event created successfully', event });
     } 
-    
     catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Failed to create Event' });
     }
 }
+
 
 export async function getAllEvents(req, res) {
     try {
@@ -75,13 +76,16 @@ export async function getEventById(req, res) {
 export async function updateEvent(req, res) {
     try {
         const { id } = req.params;
-        const { host, participants, invitationPicture, date, location, description, eventType, budget, visibility } = req.body;
+        const { title, host, participants, invitationPicture, date, location, description, eventType, budget, visibility } = req.body;
 
         const event = await Event.findById(id);
 
         if (!event) {
             return res.status(404).json({ message: 'Event not found' });
         }
+
+        if (title) 
+            event.title = title;
 
         if (host) 
             event.host = host;
@@ -114,12 +118,12 @@ export async function updateEvent(req, res) {
 
         res.status(200).json({ message: 'Event updated successfully', event });
     } 
-    
     catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Failed to update event' });
     }
 }
+
 
 export async function deleteEvent(req, res) {
     try {
