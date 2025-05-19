@@ -7,6 +7,8 @@ router.post('/review', controller.createReview);
 
 router.get('/review', controller.getAllReviews);
 
+router.get('/review/supplier/:id', controller.getReviewsBySupplierId);
+
 router.get('/review/:id', controller.getReviewById);
 
 router.put('/review/:id', controller.updateReview);

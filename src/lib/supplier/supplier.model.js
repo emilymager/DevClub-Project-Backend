@@ -6,6 +6,9 @@ const supplierSchema = new mongoose.Schema({
     enum: ['dj', 'catering', 'photographer'],
     required: true
   },
+  name: {
+    type: String
+  },
   rank: {
     type: Number,
     //required: true

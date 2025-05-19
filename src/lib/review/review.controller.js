@@ -107,3 +107,30 @@ export async function deleteReview(req, res) {
 }
 
 
+export async function getReviewsBySupplierId(req, res) {
+    try {
+        const { id } = req.params; 
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 10;
+        const skip = (page - 1) * limit;
+
+        const total = await Review.countDocuments({ supplier: id });
+
+        const reviews = await Review.find({ supplier: id })
+            .populate('user')
+            .populate('supplier')
+            .sort({ createdAt: -1 })
+            .skip(skip)
+            .limit(limit);
+
+        res.status(200).json({
+            total,
+            page,
+            pages: Math.ceil(total / limit),
+            reviews
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Failed to fetch reviews for supplier' });
+    }
+}

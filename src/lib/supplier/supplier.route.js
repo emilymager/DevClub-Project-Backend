@@ -7,6 +7,8 @@ router.post('/supplier', controller.createSupplier);
 
 router.get('/supplier', controller.getAllSuppliers);
 
+router.get('/supplier/:id/history', controller.getHistoryBySupplierId);
+
 router.get('/supplier/:id', controller.getSupplierById); 
 
 router.put('/supplier/:id', controller.updateSupplier);
