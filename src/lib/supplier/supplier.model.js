@@ -9,6 +9,9 @@ const supplierSchema = new mongoose.Schema({
   name: {
     type: String
   },
+    image: {
+    type: String
+  },
   rank: {
     type: Number,
     //required: true
