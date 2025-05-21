@@ -3,13 +3,30 @@ import mongoose from 'mongoose';
 const supplierSchema = new mongoose.Schema({
   supplierType: {
     type: String,
-    enum: ['DJ', 'catering', 'photographer'],
+    enum: [
+      'DJ',
+      'Lecturer',
+      'Alcohol products',
+      'Catering',
+      'Photographer',
+      'Live Band',
+      'Stand-up Comedian',
+      'Dancers',
+      'Private Chef',
+      'Cocktail Bar',
+      'Coffee Barista',
+      'Magnet Photos',
+      'Balloon Artist',
+      'Table Styling',
+      'Security Guard',
+      'Cleaning Service'
+    ],
     required: true
   },
   name: {
     type: String
   },
-    image: {
+  image: {
     type: String
   },
   rank: {
