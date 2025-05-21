@@ -3,20 +3,20 @@ import * as controller from './supplier.controller.js';
 
 const router = express.Router();
 
-router.post('/supplier', controller.createSupplier);
+router.post('/', controller.createSupplier);
 
-router.get('/supplier', controller.getAllSuppliers);
+router.get('/', controller.getAllSuppliers);
 
-router.get('/supplier/:id/history', controller.getHistoryBySupplierId);
+router.get('/:id/history', controller.getHistoryBySupplierId);
 
-router.get('/supplier/:id', controller.getSupplierById); 
+router.get('/:id', controller.getSupplierById); 
 
-router.put('/supplier/:id', controller.updateSupplier);
+router.put('/:id', controller.updateSupplier);
 
-router.delete('/supplier/:id', controller.deleteSupplier);
+router.delete('/:id', controller.deleteSupplier);
 
-router.post('/supplier/:id/review', controller.addReviewToSupplier);
+router.post('/:id/review', controller.addReviewToSupplier);
 
-router.post('/supplier/:id/event', controller.addEventToHistory);
+router.post('/:id/event', controller.addEventToHistory);
 
 export default router;

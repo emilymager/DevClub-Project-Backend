@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 const supplierSchema = new mongoose.Schema({
   supplierType: {
     type: String,
-    enum: ['dj', 'catering', 'photographer'],
+    enum: ['DJ', 'catering', 'photographer'],
     required: true
   },
   name: {

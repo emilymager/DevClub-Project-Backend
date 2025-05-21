@@ -3,10 +3,10 @@ import * as controller from'./eventpicture.controller.js';
 
 const router = express.Router();
 
-router.post('/eventpicture', controller.createEventPicture);
-router.get('/eventpicture', controller.getAllEventPictures);
-router.get('/eventpicture/:id', controller.getEventPictureById);
-router.put('/eventpicture/:id', controller.updateEventPicture);
-router.delete('/eventpicture/:id', controller.deleteEventPicture);
+router.post('/', controller.createEventPicture);
+router.get('/', controller.getAllEventPictures);
+router.get('/:id', controller.getEventPictureById);
+router.put('/:id', controller.updateEventPicture);
+router.delete('/:id', controller.deleteEventPicture);
 
 export default router;

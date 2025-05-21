@@ -3,17 +3,17 @@ import * as controller from './review.controller.js';
 
 const router = express.Router();
 
-router.post('/review', controller.createReview);
+router.post('/', controller.createReview);
 
-router.get('/review', controller.getAllReviews);
+router.get('/', controller.getAllReviews);
 
-router.get('/review/supplier/:id', controller.getReviewsBySupplierId);
+router.get('/supplier/:id', controller.getReviewsBySupplierId);
 
-router.get('/review/:id', controller.getReviewById);
+router.get('/:id', controller.getReviewById);
 
-router.put('/review/:id', controller.updateReview);
+router.put('/:id', controller.updateReview);
 
-router.delete('/review/:id', controller.deleteReview);
+router.delete('/:id', controller.deleteReview);
 
 
 
