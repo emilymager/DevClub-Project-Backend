@@ -3,14 +3,32 @@ import * as controller from './event.controller.js';
 
 const router = express.Router();
 
-router.post('/event', controller.createEvent);
+router.post('/', controller.createEvent);
 
-router.get('/event', controller.getAllEvents);
+router.get('/', controller.getAllEvents);
 
-router.get('/event/:id', controller.getEventById); 
+router.get('/:id', controller.getEventById); 
 
-router.put('/event/:id', controller.updateEvent);
+router.put('/:id', controller.updateEvent);
 
-router.delete('/event/:id', controller.deleteEvent);
+router.delete('/:id', controller.deleteEvent);
+
+router.post('/supplier/add', controller.addSupplierToEvent);
+
+router.post('/supplier/remove', controller.removeSupplierFromEvent);
+
+router.post('/participant/add', controller.addParticipantToEvent);
+
+router.post('/participant/remove', controller.deleteParticipantByHost);
+
+router.post('/picture/add', controller.addEventPicture);
+
+router.post('/picture/remove', controller.removeEventPicture);
+
+router.post('/event/invitationPicture/add', controller.addInvitationPicture);
+
+router.post('/invitationPicture/remove', controller.removeInvitationPicture);
+
+router.put('/event/invitationPicture', controller.putInvitationPicture);
 
 export default router;

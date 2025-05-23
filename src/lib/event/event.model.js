@@ -12,6 +12,11 @@ const eventSchema = new mongoose.Schema({
         ref: 'User'
       }],
 
+      suppliers: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Supplier'
+      }],      
+
       invitationPicture: {
         type: String,
       },
@@ -21,6 +26,10 @@ const eventSchema = new mongoose.Schema({
       },
 
       location: {
+        type: String,
+      },
+
+        title: {
         type: String,
       },
 
@@ -42,9 +51,15 @@ const eventSchema = new mongoose.Schema({
         type: String,
         enum: ['public', 'private'],
         default: 'private'
-      }
+      },
+      
+      eventPictures: [{
+        type: String,
+      }]
+      
 }, { timestamps: true });
 
 const Event = mongoose.model('Event', eventSchema);
 
 export default Event;
+//
