@@ -5,7 +5,7 @@ dotenv.config();
 
 const router = express.Router();
 
-router.post('/eventAssistant', async (req, res) => {
+router.post('/', async (req, res) => {
   const { services, budget } = req.body;
 
   const prompt = `You are an expert event planner in Israel.
@@ -17,7 +17,9 @@ Please return a JSON array of supplier recommendations based in Israel.
 Each object in the array must follow this exact schema:
 {
   "supplierType": one of [ "Photographer", "Magnet Photographer", "Catering Service", "DJ", "Security", "Lighting Technician / Lighting Setup", "Bartender / Bar Services", "Florist / Flower Decoration", "Furniture Rental", "Balloon Artist / Kids Entertainment", "Live Musicians", "Private Chef / Live Food Stations", "Makeup Artist", "Transportation Services", "Graphic Designer" ],
-  "description": string (include a short recommendation for a real or realistic supplier in Israel, with their name if possible, and an estimated price range in Israeli shekels [₪] relevant to the Israeli market)
+  "name": string (the name of a real or realistic Israeli supplier),
+  "description": string (short description or recommendation),
+  "priceRange": string (estimated price range in Israeli shekels [₪], relevant to the Israeli market)
 }
 
 Important:
