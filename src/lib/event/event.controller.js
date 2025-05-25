@@ -2,7 +2,7 @@ import Event from './event.model.js';
 
 export async function createEvent(req, res) {
     try {
-        const { title, host, participants, invitationPicture, date, location, description, eventType, budget, visibility } = req.body;
+        const { title, host, participants, invitationPicture, date, location, description, eventType, budget, visibility,suppliers } = req.body;
 
         const event = new Event({
             title,
@@ -14,7 +14,8 @@ export async function createEvent(req, res) {
             description,
             eventType,
             budget,
-            visibility
+            visibility,
+            suppliers
         });
 
         await event.save();

@@ -28,12 +28,12 @@ mongoose.connect(process.env.MONGO_URI)
 
 
 
-app.use('/', supplierRoutes);
-app.use('/', userRoutes);
-app.use('/', evePicRoutes);
-app.use('/', eventRoutes);
-app.use('/', reviewRoutes);
-app.use('/', aiAssistantRoute);
+app.use('/supplier', supplierRoutes);
+app.use('/user', userRoutes);
+app.use('/eventPicture', evePicRoutes);
+app.use('/event', eventRoutes);
+app.use('/review', reviewRoutes);
+app.use('/ai', aiAssistantRoute);
 
 
 
