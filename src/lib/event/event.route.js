@@ -7,6 +7,9 @@ router.post('/', controller.createEvent);
 
 router.get('/', controller.getAllEvents);
 
+router.get('/eventTypes', controller.getEventTypes);
+
+
 router.get('/:id', controller.getEventById); 
 
 router.put('/:id', controller.updateEvent);
