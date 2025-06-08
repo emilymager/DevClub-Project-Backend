@@ -7,17 +7,15 @@ import supplierRoutes from "./src/lib/supplier/supplier.route.js";
 import userRoutes from "./src/lib/user/user.route.js";
 import evePicRoutes from "./src/lib/eventpicture/eventpicture.route.js";
 import eventRoutes from "./src/lib/event/event.route.js";
-
 import reviewRoutes from "./src/lib/review/review.route.js";
-import aiAssistantRoute from "./src/lib/aiAssustant/aiAssistant.route.js";
+import aiAssistantRoute from "./src/lib/aiAssustant/aiAssistant.route.js"; 
 
 dotenv.config();
 
 const app = express();
 
-app.use(express.json());
-
 app.use(cors());
+app.use(express.json());
 
 mongoose
   .connect(process.env.MONGO_URI)
@@ -26,10 +24,10 @@ mongoose
 
 app.use("/supplier", supplierRoutes);
 app.use("/user", userRoutes);
-app.use("/eventPicture", evePicRoutes);
+app.use("/eventpicture", evePicRoutes); 
 app.use("/event", eventRoutes);
 app.use("/review", reviewRoutes);
-app.use("/ai", aiAssistantRoute);
+app.use("/ai", aiAssistantRoute); 
 
 app.get("/", (req, res) => {
   res.send("Server is running and connected to MongoDB!");
