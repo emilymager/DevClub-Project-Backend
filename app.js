@@ -1,45 +1,38 @@
-import dotenv from 'dotenv';
-import express from 'express';
-import mongoose from 'mongoose';
-import cors from 'cors';
+import dotenv from "dotenv";
+import express from "express";
+import mongoose from "mongoose";
+import cors from "cors";
 
+import supplierRoutes from "./src/lib/supplier/supplier.route.js";
+import userRoutes from "./src/lib/user/user.route.js";
+import evePicRoutes from "./src/lib/eventpicture/eventpicture.route.js";
+import eventRoutes from "./src/lib/event/event.route.js";
 
-import supplierRoutes from './src/lib/supplier/supplier.route.js'; 
-import userRoutes from './src/lib/user/user.route.js'; 
-import evePicRoutes from './src/lib/eventpicture/eventpicture.route.js'; 
-import eventRoutes from './src/lib/event/event.route.js'; 
-
-import reviewRoutes from './src/lib/review/review.route.js';
-import aiAssistantRoute from './src/lib/aiAssustant/aiAssistant.route.js'
+import reviewRoutes from "./src/lib/review/review.route.js";
+import aiAssistantRoute from "./src/lib/aiAssustant/aiAssistant.route.js";
 
 dotenv.config();
 
 const app = express();
 
-
 app.use(express.json());
 
 app.use(cors());
 
+mongoose
+  .connect(process.env.MONGO_URI)
+  .then(() => console.log("Connected to MongoDB"))
+  .catch((error) => console.error("Failed to connect to MongoDB:", error));
 
-mongoose.connect(process.env.MONGO_URI)
-  .then(() => console.log('Connected to MongoDB'))
-  .catch((error) => console.error('Failed to connect to MongoDB:', error));
+app.use("/supplier", supplierRoutes);
+app.use("/user", userRoutes);
+app.use("/eventPicture", evePicRoutes);
+app.use("/event", eventRoutes);
+app.use("/review", reviewRoutes);
+app.use("/ai", aiAssistantRoute);
 
-
-
-app.use('/supplier', supplierRoutes);
-app.use('/user', userRoutes);
-app.use('/eventPicture', evePicRoutes);
-app.use('/event', eventRoutes);
-app.use('/review', reviewRoutes);
-app.use('/ai', aiAssistantRoute);
-
-
-
-
-app.get('/', (req, res) => {
-  res.send('Server is running and connected to MongoDB!');
+app.get("/", (req, res) => {
+  res.send("Server is running and connected to MongoDB!");
 });
 
 const PORT = process.env.PORT || 3000;

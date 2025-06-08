@@ -2,7 +2,7 @@ import Event from './event.model.js';
 
 export async function createEvent(req, res) {
     try {
-        const { title, host, participants, invitationPicture, date, location, description, eventType, budget, visibility,suppliers } = req.body;
+        const { title, host, participants, invitationPicture, date, location, description, eventType, budget, visibility, suppliers, maxParticipants } = req.body;
 
         const event = new Event({
             title,
@@ -15,7 +15,8 @@ export async function createEvent(req, res) {
             eventType,
             budget,
             visibility,
-            suppliers
+            suppliers,
+            maxParticipants
         });
 
         await event.save();
@@ -70,14 +71,14 @@ export async function getEventById(req, res) {
     
     catch (error) {
         console.error(error);
-        res.status(500).json({ message: 'Failed to fetch event' });
+  res.status(500).json({ message: 'Failed to fetch event' });
     }
 }
 
 export async function updateEvent(req, res) {
     try {
         const { id } = req.params;
-        const { title, host, participants, invitationPicture, date, location, description, eventType, budget, visibility } = req.body;
+        const { title, host, participants, invitationPicture, date, location, description, eventType, budget, visibility, maxParticipants } = req.body;
 
         const event = await Event.findById(id);
 
@@ -114,7 +115,10 @@ export async function updateEvent(req, res) {
 
         if (visibility) 
             event.visibility = visibility;
-        
+
+        if (maxParticipants !== undefined) 
+            event.maxParticipants = maxParticipants;
+
         await event.save();
 
         res.status(200).json({ message: 'Event updated successfully', event });
@@ -124,6 +128,7 @@ export async function updateEvent(req, res) {
         res.status(500).json({ message: 'Failed to update event' });
     }
 }
+
 
 
 export async function deleteEvent(req, res) {
@@ -197,6 +202,10 @@ export async function addSupplierToEvent(req, res) {
         return res.status(404).json({ message: 'Event not found' });
       }
   
+
+       if (event.maxParticipants !== undefined && event.participants.length >= event.maxParticipants) {
+      return res.status(400).json({ message: 'Maximum number of participants reached' });
+    }
       if (!event.participants.includes(userId)) {
         event.participants.push(userId);
         await event.save();

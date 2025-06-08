@@ -12,6 +12,11 @@ const eventSchema = new mongoose.Schema({
         ref: 'User'
       }],
 
+      
+      maxParticipants: {
+        type: Number,
+      },
+
       suppliers: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Supplier'
