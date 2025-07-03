@@ -9,6 +9,16 @@ import evePicRoutes from './src/lib/eventpicture/eventpicture.route.js';
 import eventRoutes from './src/lib/event/event.route.js'; 
 import reviewRoutes from './src/lib/review/review.route.js';
 import aiAssistantRoute from './src/lib/aiAssustant/aiAssistant.route.js';
+import admin from 'firebase-admin';
+import fs from 'fs';
+import path from 'path';
+
+const serviceAccountPath = path.resolve('./src/config/serviceAccountKey.json');
+const serviceAccount = JSON.parse(fs.readFileSync(serviceAccountPath, 'utf8'));
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+});
 
 dotenv.config();
 

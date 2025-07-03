@@ -1,9 +1,11 @@
 import express from 'express';
 import * as controller from './supplier.controller.js';
+import { authenticate } from '../../middleware/authMiddleware.js';
+
 
 const router = express.Router();
 
-router.post('/', controller.createSupplier);
+router.post('/',authenticate, controller.createSupplier);
 
 router.get('/', controller.getAllSuppliers);
 
@@ -11,12 +13,12 @@ router.get('/:id/history', controller.getHistoryBySupplierId);
 
 router.get('/:id', controller.getSupplierById); 
 
-router.put('/:id', controller.updateSupplier);
+router.put('/:id',authenticate, controller.updateSupplier);
 
-router.delete('/:id', controller.deleteSupplier);
+router.delete('/:id',authenticate, controller.deleteSupplier);
 
-router.post('/:id/review', controller.addReviewToSupplier);
+router.post('/:id/review',authenticate, controller.addReviewToSupplier);
 
-router.post('/:id/event', controller.addEventToHistory);
+router.post('/:id/event',authenticate, controller.addEventToHistory);
 
 export default router;

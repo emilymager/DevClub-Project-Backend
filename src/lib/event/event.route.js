@@ -1,34 +1,36 @@
 import express from 'express';
 import * as controller from './event.controller.js';
+import { authenticate } from '../../middleware/authMiddleware.js';
 
 const router = express.Router();
 
-router.post('/', controller.createEvent);
+router.post('/',authenticate, controller.createEvent);
 
 router.get('/', controller.getAllEvents);
 
-router.get('/:id', controller.getEventById); 
+router.get('/:id',controller.getEventById); 
 
-router.put('/:id', controller.updateEvent);
+router.put('/:id',authenticate, controller.updateEvent);
 
-router.delete('/:id', controller.deleteEvent);
+router.delete('/:id',authenticate, controller.deleteEvent);
 
-router.post('/supplier/add', controller.addSupplierToEvent);
+router.post('/supplier/add', authenticate, controller.addSupplierToEvent);
 
-router.post('/supplier/remove', controller.removeSupplierFromEvent);
+router.post('/supplier/remove',authenticate, controller.removeSupplierFromEvent);
 
-router.post('/participant/add', controller.addParticipantToEvent);
+router.post('/:id/participant/add', authenticate, controller.addParticipantToEvent);
 
-router.post('/participant/remove', controller.deleteParticipantByHost);
 
-router.post('/picture/add', controller.addEventPicture);
+router.post('/participant/remove',authenticate, controller.deleteParticipantByHost);
 
-router.post('/picture/remove', controller.removeEventPicture);
+router.post('/picture/add',authenticate, controller.addEventPicture);
 
-router.post('/event/invitationPicture/add', controller.addInvitationPicture);
+router.post('/picture/remove',authenticate, controller.removeEventPicture);
 
-router.post('/invitationPicture/remove', controller.removeInvitationPicture);
+router.post('/event/invitationPicture/add',authenticate, controller.addInvitationPicture);
 
-router.put('/event/invitationPicture', controller.putInvitationPicture);
+router.post('/invitationPicture/remove',authenticate, controller.removeInvitationPicture);
+
+router.put('/event/invitationPicture',authenticate, controller.putInvitationPicture);
 
 export default router;

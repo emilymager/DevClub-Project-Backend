@@ -3,13 +3,10 @@ import mongoose from 'mongoose';
 const reviewSchema = new mongoose.Schema({
   rank: {
     type: Number,
-    required: true,
-    // min: 1,
-    // max: 5
+    required: true
   },
   user: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
+    type: String, 
     required: true
   },
   supplier: {
@@ -17,11 +14,9 @@ const reviewSchema = new mongoose.Schema({
     ref: 'Supplier',
     required: true
   },
-  description: {
-    type: String
-  }
+  description: String
 }, { timestamps: true });
 
 const Review = mongoose.model('Review', reviewSchema);
 
-export default Review
+export default Review;
