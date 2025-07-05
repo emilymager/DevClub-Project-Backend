@@ -9,9 +9,7 @@ export async function authenticate(req, res, next) {
     }
 
     const token = authHeader.split(' ')[1];
-
     const decodedToken = await admin.auth().verifyIdToken(token);
-
 
     req.user = {
       id: decodedToken.uid,
@@ -21,6 +19,6 @@ export async function authenticate(req, res, next) {
     next();
   } catch (error) {
     console.error('Auth error:', error);
-    return res.status(401).json({ message: 'Invalid token' });
+    return res.status(401).json({ message: 'Invalid or expired token' });
   }
 }

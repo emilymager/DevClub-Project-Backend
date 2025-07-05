@@ -1,4 +1,5 @@
 import Review from './review.model.js';
+import Supplier from '../supplier/supplier.model.js';
 
 export async function createReview(req, res) {
   try {
@@ -100,17 +101,22 @@ export async function deleteReview(req, res) {
     const { id } = req.params;
 
     const review = await Review.findById(id);
-
     if (!review) {
       return res.status(404).json({ message: 'Review not found' });
     }
+   if (review.user.toString() !== req.user.id) {
+     return res.status(403).json({ message: 'You are not authorized to delete this review' });
+   }
+   
+   const isReviewOwner = review.user.toString() === req.user.id;
 
-    if (review.user.toString() !== req.user.id) {
-      return res.status(403).json({ message: 'You are not authorized to delete this review' });
-    }
+   const supplier = await Supplier.findById(review.supplier);
+   const isSupplierHost = supplier && supplier.host === req.user.id;
+   if (!isReviewOwner && !isSupplierHost) {
+     return res.status(403).json({ message: 'You are not authorized to delete this review' });
+   }
 
     await review.deleteOne();
-
     res.status(200).json({ message: 'Review deleted successfully' });
   } catch (error) {
     console.error(error);

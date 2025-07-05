@@ -15,6 +15,10 @@ const supplierSchema = new mongoose.Schema({
   name: String,
   image: String,
   rank: Number,
+  host: {
+  type: String, 
+  required: true
+  },
   description: String,
   history: [{
     type: mongoose.Schema.Types.ObjectId,

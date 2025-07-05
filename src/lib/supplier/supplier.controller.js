@@ -6,12 +6,19 @@ export async function createSupplier(req, res) {
   try {
     const { name, supplierType, rank, description, image } = req.body;
 
+    // בודקים אם המשתמש כבר יצר ספק לפי req.user.id
+    const existingSupplier = await Supplier.findOne({ host: req.user.id });
+    if (existingSupplier) {
+      return res.status(400).json({ message: 'User already has a supplier' });
+    }
+
     const supplier = new Supplier({
       name,
       supplierType,
       rank,
       description,
-      image
+      image,
+      host: req.user.id,  
     });
 
     await supplier.save();
@@ -22,6 +29,25 @@ export async function createSupplier(req, res) {
     res.status(500).json({ message: 'Failed to create supplier' });
   }
 }
+
+export async function getMySupplier(req, res) {
+  try {
+  
+    if (!req.user?.id) {
+      return res.status(401).json({ message: 'Unauthorized: No user ID' });
+    }
+
+
+    const supplier = await Supplier.findOne({ host: req.user.id });
+
+   
+    return res.status(200).json({ supplier: supplier || null });
+  } catch (error) {
+ 
+    return res.status(200).json({ supplier: null });
+  }
+}
+
 
 export async function getAllSuppliers(req, res) {
   try {
@@ -74,6 +100,11 @@ export async function updateSupplier(req, res) {
       return res.status(404).json({ message: 'Supplier not found' });
     }
 
+   
+   if (supplier.host !== req.user.id) {
+     return res.status(403).json({ message: 'You are not authorized to edit this supplier' });
+   }
+
     supplier.name = name || supplier.name;
     supplier.supplierType = supplierType || supplier.supplierType;
     supplier.rank = rank || supplier.rank;
@@ -119,7 +150,7 @@ export async function addReviewToSupplier(req, res) {
     const review = new Review({
       rank,
       description,
-      user: req.user.id,   // 🛡️ זה הכי חשוב - משתמש מחובר בלבד
+      user: req.user.id,   // תואם ל-middleware שלך
       supplier: supplierId
     });
 
