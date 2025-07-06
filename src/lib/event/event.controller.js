@@ -112,7 +112,16 @@ export async function deleteEvent(req, res) {
     res.status(500).json({ message: 'Failed to delete event' });
   }
 }
-
+export async function getEventsByParticipant(req, res) {
+  try {
+    const userId = req.user.id;
+    const events = await Event.find({ participants: userId }).sort({ date: -1 });
+    return res.status(200).json(events);
+  } catch (err) {
+    console.error("Failed to fetch user events", err);
+    return res.status(500).json({ message: "Failed to fetch user events" });
+  }
+}
 
 export async function addSupplierToEvent(req, res) {
   try {
@@ -158,18 +167,14 @@ export async function removeSupplierFromEvent(req, res) {
 
 
 export const addParticipantToEvent = async (req, res) => {
-  const { id } = req.params; 
-  const { userId } = req.body; 
+  const { id } = req.params;
+  const userId = req.user.id;             
 
   try {
     const event = await Event.findById(id);
-    if (!event) {
-      console.warn(`Event with ID ${id} not found`);
-      return res.status(404).json({ message: "Event not found" });
-    }
+    if (!event) return res.status(404).json({ message: "Event not found" });
 
     if (event.participants.includes(userId)) {
-      console.info(`User ${userId} already joined event ${id}`);
       return res.status(409).json({ message: "User already joined this event" });
     }
 
@@ -178,7 +183,7 @@ export const addParticipantToEvent = async (req, res) => {
 
     res.status(200).json({ message: "User added to event participants", event });
   } catch (error) {
-    console.error("Unexpected error in addParticipantToEvent:", error);
+    console.error(error);
     res.status(500).json({ message: "Failed to add participant", error: error.message });
   }
 };

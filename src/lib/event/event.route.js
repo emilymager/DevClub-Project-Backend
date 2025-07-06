@@ -1,14 +1,19 @@
+
 import express from 'express';
 import * as controller from './event.controller.js';
 import { authenticate } from '../../middleware/authMiddleware.js';
 
 const router = express.Router();
 
-router.post('/',authenticate, controller.createEvent);
+router.get(
+  "/participant/me",
+  authenticate,
+  controller.getEventsByParticipant
+);
 
-router.get('/', controller.getAllEvents);
+router.get("/", controller.getAllEvents);
 
-router.get('/:id',controller.getEventById); 
+router.get("/:id", controller.getEventById);
 
 router.put('/:id',authenticate, controller.updateEvent);
 
