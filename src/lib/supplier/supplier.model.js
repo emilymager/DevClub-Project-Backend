@@ -19,7 +19,8 @@ const supplierSchema = new mongoose.Schema({
       'Balloon Artist',
       'Table Styling',
       'Security Guard',
-      'Cleaning Service'
+      'Cleaning Service',
+      'Other',
     ],
     required: true
   },

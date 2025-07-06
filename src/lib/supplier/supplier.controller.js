@@ -69,6 +69,7 @@ export async function updateSupplier(req, res) {
     try {
         const { id } = req.params;
         const { name, supplierType, rank, description, image } = req.body;
+         console.log("Received update data:", req.body); // Add this
 
         const supplier = await Supplier.findById(id);
 
