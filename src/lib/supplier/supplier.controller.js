@@ -5,8 +5,8 @@ import Event from '../event/event.model.js';
 export async function createSupplier(req, res) {
   try {
     const { name, supplierType, rank, description, image } = req.body;
+console.log("User in request:", req.user);
 
-    // בודקים אם המשתמש כבר יצר ספק לפי req.user.id
     const existingSupplier = await Supplier.findOne({ host: req.user.id });
     if (existingSupplier) {
       return res.status(400).json({ message: 'User already has a supplier' });
@@ -93,6 +93,7 @@ export async function updateSupplier(req, res) {
   try {
     const { id } = req.params;
     const { name, supplierType, rank, description, image } = req.body;
+    console.log("hello");
 
     const supplier = await Supplier.findById(id);
 
@@ -150,7 +151,7 @@ export async function addReviewToSupplier(req, res) {
     const review = new Review({
       rank,
       description,
-      user: req.user.id,   // תואם ל-middleware שלך
+      user: req.user.id,   
       supplier: supplierId
     });
 
