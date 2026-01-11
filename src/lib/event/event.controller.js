@@ -311,3 +311,23 @@ export async function putInvitationPicture(req, res) {
     res.status(500).json({ message: 'Failed to update invitation picture' });
   }
 }
+
+export function getEventTypes(req, res) {
+  try {
+    const eventTypes = Event.schema.path('eventType').enumValues;
+    res.status(200).json({ eventTypes });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Failed to fetch event types" });
+  }
+}
+export async function getEventsByHost(req, res) {
+  try {
+    const userId = req.user.id; 
+    const events = await Event.find({ host: userId }).sort({ createdAt: -1 });
+    res.status(200).json({ events });
+  } catch (err) {
+    console.error("Failed to fetch user-created events", err);
+    res.status(500).json({ message: "Failed to fetch user-created events" });
+  }
+}

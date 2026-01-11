@@ -34,7 +34,7 @@ export async function getAllReviews(req, res) {
     const total = await Review.countDocuments();
 
     const reviews = await Review.find()
-      .populate('supplier') // שומר רק את הספק
+      .populate('supplier') 
       .sort({ createdAt: -1 })
       .skip(skip)
       .limit(limit);

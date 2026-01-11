@@ -2,16 +2,14 @@ import express from 'express';
 import * as controller from './supplier.controller.js';
 import { authenticate } from '../../middleware/authMiddleware.js';
 
-
+console.log("bye");
 const router = express.Router();
 
-router.get('/mine', authenticate, controller.getMySupplier);
+router.get('/my', authenticate, controller.getMySupplier);
 
 router.post('/',authenticate, controller.createSupplier);
 
 router.get('/', controller.getAllSuppliers);
-
-
 
 router.get('/:id/history', controller.getHistoryBySupplierId);
 
